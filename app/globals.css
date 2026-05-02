@@ -451,7 +451,7 @@ video {
 /* ── Section Shell ───────────────────────────────────────── */
 .hero-section {
   position: relative;
-  min-height: 100svh;
+  min-height: 85svh;
   display: flex;
   align-items: center;
   background-color: var(--color-bg-base);
@@ -522,7 +522,7 @@ video {
   z-index: 2;
   display: flex;
   align-items: center;
-  min-height: 100svh;
+  min-height: 85svh;
   padding-block: var(--space-32);
 }
 
@@ -626,64 +626,163 @@ video {
   transform: translateX(4px);
 }
 
-/* ── Metrics Trust Section ────────────────────────────────── */
-.hero-metrics {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  padding-top: var(--space-8);
+/* ═══════════════════════════════════════════════════════════════
+   TRUST — Hybrid Social Proof + Metrics
+═══════════════════════════════════════════════════════════════ */
+
+@keyframes trustFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes trustFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.trust-section {
+  position: relative;
+  background: linear-gradient(180deg,
+      var(--color-bg-soft) 0%,
+      var(--color-bg-base) 100%);
+  padding-block: var(--space-12) var(--space-12);
+  overflow: hidden;
   border-top: 1px solid var(--color-border-light);
 }
 
-.hero-metric {
+.trust-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: var(--container-lg);
+  margin-inline: auto;
+}
+
+/* ── Star Row ────────────────────────────────────────────── */
+.trust-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  animation: trustFadeUp 0.8s var(--ease-luxury) 0.1s both;
+}
+
+.trust-stars {
+  display: flex;
+  gap: 10px;
+  animation: trustFadeIn 1.2s var(--ease-luxury) 0.3s both;
+}
+
+.trust-primary-text {
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.trust-primary-text strong {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: 1;
+}
+
+.trust-primary-text span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Horizontal Divider ──────────────────────────────────── */
+.trust-horizontal-divider {
+  width: 100%;
+  max-width: 680px;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-border-light) 60%, var(--color-text-heading) 15%);
+  border: none;
+  margin: var(--space-8) auto var(--space-6);
+  opacity: 0.7;
+}
+
+/* ── Metrics Row ─────────────────────────────────────────── */
+.trust-metrics-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding-top: 0;
+  animation: trustFadeUp 0.8s var(--ease-luxury) 0.3s both;
+}
+
+.trust-metric {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 4px;
-  padding-inline: var(--space-8);
+  padding-inline: var(--space-12);
 }
 
-.hero-metric:first-child {
+.trust-metric:first-child {
   padding-left: 0;
 }
 
-.hero-metric:last-child {
+.trust-metric:last-child {
   padding-right: 0;
 }
 
 /* Thin vertical divider between metrics */
-.hero-metric-divider {
+.trust-metric-divider {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
   width: 1px;
   height: 36px;
-  background: linear-gradient(to bottom,
-      transparent 0%,
-      var(--color-border) 25%,
-      var(--color-border) 75%,
-      transparent 100%);
-  opacity: 0.5;
+  background: color-mix(in srgb, var(--color-border-light) 60%, var(--color-text-heading) 15%);
 }
 
-.hero-metric-value {
+.trust-metric-value {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
-  font-weight: 500;
+  font-size: 2.6rem;
+  font-weight: 400;
   color: var(--color-text-heading);
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
-.hero-metric-label {
+.trust-metric-label {
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: var(--color-text-muted);
   white-space: nowrap;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 /* ── Floating Badges — Visible Glassmorphism ─────────────── */
@@ -781,7 +880,7 @@ video {
     max-width: 460px;
   }
 
-  .hero-metric {
+  .trust-metric {
     padding-inline: var(--space-6);
   }
 
@@ -847,9 +946,11 @@ video {
     flex-direction: column;
     width: 100%;
     max-width: 360px;
-    margin-bottom: var(--space-6); /* Reduced from space-8 */
+    margin-bottom: var(--space-6);
+    /* Reduced from space-8 */
     gap: var(--space-3);
-    order: 4; /* CTA Row now comes before body text */
+    order: 4;
+    /* CTA Row now comes before body text */
   }
 
   .hero-body {
@@ -857,12 +958,19 @@ video {
     text-align: center;
     font-size: var(--text-sm);
     margin-bottom: var(--space-10);
-    order: 5; /* Body text moved below CTA */
+    order: 5;
+    /* Body text moved below CTA */
   }
 
-  .hero-eyebrow { order: 1; margin-bottom: var(--space-2); }
-  .hero-divider { order: 2; margin-block: var(--space-2) var(--space-4); }
-  .hero-metrics { order: 6; }
+  .hero-eyebrow {
+    order: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .hero-divider {
+    order: 2;
+    margin-block: var(--space-2) var(--space-4);
+  }
 
   .hero-cta-row .btn-accent,
   .hero-cta-row .btn-secondary {
@@ -870,36 +978,47 @@ video {
     justify-content: center;
   }
 
-  /* Metrics — stacked horizontally, centered */
-  .hero-metrics {
-    justify-content: center;
-    border-top: none;
-    padding-top: 0;
+  /* Trust Section — mobile adjustments */
+  .trust-section {
+    padding-block: var(--space-8) var(--space-10);
+  }
+
+  .trust-container {
+    gap: var(--space-4);
+  }
+
+  .trust-primary {
+    gap: 6px;
+  }
+
+  .trust-metrics-row {
     gap: 0;
     width: 100%;
+    padding-top: var(--space-4);
   }
 
-  .hero-metric {
+  .trust-metric {
     align-items: center;
     text-align: center;
-    padding-inline: var(--space-6);
+    padding-inline: var(--space-4);
     flex: 1;
+    gap: 4px;
   }
 
-  .hero-metric:first-child {
-    padding-left: var(--space-4);
+  .trust-metric:first-child {
+    padding-left: 0;
   }
 
-  .hero-metric:last-child {
-    padding-right: var(--space-4);
+  .trust-metric:last-child {
+    padding-right: 0;
   }
 
-  .hero-metric-value {
-    font-size: clamp(1.4rem, 5vw, 1.8rem);
+  .trust-metric-value {
+    font-size: clamp(1.5rem, 6vw, 1.8rem);
   }
 
-  .hero-metric-divider {
-    height: 28px;
+  .trust-metric-divider {
+    height: 30px;
   }
 
   /* Floating badges — balanced editorial layout */
@@ -956,23 +1075,23 @@ video {
     font-size: 0.6rem;
   }
 
-  .hero-metric {
-    padding-inline: var(--space-4);
+  .trust-metric {
+    padding-inline: var(--space-2);
   }
 
-  .hero-metric:first-child {
-    padding-left: var(--space-2);
+  .trust-metric:first-child {
+    padding-left: 0;
   }
 
-  .hero-metric:last-child {
-    padding-right: var(--space-2);
+  .trust-metric:last-child {
+    padding-right: 0;
   }
 
-  .hero-metric-value {
-    font-size: clamp(1.25rem, 5vw, 1.5rem);
+  .trust-metric-value {
+    font-size: clamp(1.28rem, 5vw, 1.55rem);
   }
 
-  .hero-metric-label {
-    font-size: 0.6rem;
+  .trust-metric-label {
+    font-size: 0.55rem;
   }
 }

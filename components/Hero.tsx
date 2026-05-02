@@ -4,9 +4,9 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────
-   JUUNÉ Skin Atelier — Hero Section (Refined v3)
+   JUUNÉ Skin Atelier — Hero + Trust Section (v4)
    • Floating badges with improved visibility
-   • Metric-based trust section with count-up animation
+   • Hybrid trust: star rating + metric count-up
    • Tokens: 100% design-system variables from globals.css
 ───────────────────────────────────────────────────────────── */
 
@@ -30,7 +30,6 @@ function useCountUp(
     const step = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic for smooth deceleration
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * end;
 
@@ -70,7 +69,7 @@ function useCountUp(
 
 /* ── Metric Data ──────────────────────────────────────────── */
 const METRICS = [
-  { end: 12, suffix: "K+", prefix: "", decimals: 0, label: "Happy Clients" },
+  { end: 12, suffix: "K+", prefix: "", decimals: 0, label: "Clients" },
   { end: 98, suffix: "%", prefix: "", decimals: 0, label: "Satisfaction" },
   { end: 8, suffix: "+", prefix: "", decimals: 0, label: "Years Experience" },
 ] as const;
@@ -84,13 +83,16 @@ export default function Hero(): React.ReactElement {
     return () => clearTimeout(t);
   }, []);
 
-  // Count-up hooks for each metric
   const metric0 = useCountUp(METRICS[0].end, 1400, METRICS[0].suffix, METRICS[0].prefix, METRICS[0].decimals);
   const metric1 = useCountUp(METRICS[1].end, 1200, METRICS[1].suffix, METRICS[1].prefix, METRICS[1].decimals);
   const metric2 = useCountUp(METRICS[2].end, 1000, METRICS[2].suffix, METRICS[2].prefix, METRICS[2].decimals);
   const metricRefs = [metric0, metric1, metric2];
 
   return (
+    <>
+    {/* ═══════════════════════════════════════════════════════
+        HERO SECTION
+    ═══════════════════════════════════════════════════════ */}
     <section className="hero-section" aria-label="Hero — JUUNÉ Skin Atelier">
 
       {/* ── Ambient background wash ───────────────────────── */}
@@ -106,9 +108,7 @@ export default function Hero(): React.ReactElement {
           sizes="(max-width: 768px) 100vw, 58vw"
           className="hero-model-img"
         />
-        {/* Left-edge gradient fade for seamless blend */}
         <div className="hero-model-fade" aria-hidden="true" />
-        {/* Bottom fade */}
         <div className="hero-model-bottom-fade" aria-hidden="true" />
 
         {/* ── Floating Badge — Glow Score ──────────────── */}
@@ -146,25 +146,19 @@ export default function Hero(): React.ReactElement {
       <div className="container-juune hero-inner">
         <div className={`hero-content ${visible ? "hero-content--visible" : ""}`}>
 
-          {/* Eyebrow */}
           <span className="label-eyebrow hero-eyebrow">Luxury Skin Atelier</span>
-
-          {/* Gold rule */}
           <hr className="divider hero-divider" />
 
-          {/* Headline */}
           <h1 className="hero-headline">
             Timeless Skin,<br />
             <em>Effortless</em> Confidence
           </h1>
 
-          {/* Body */}
           <p className="hero-body">
             At JUUNÉ Skin Atelier, we craft personalised treatments
             designed to reveal your most confident, radiant skin.
           </p>
 
-          {/* CTA row */}
           <div className="hero-cta-row">
             <a href="#booking" className="btn-accent" id="hero-cta-primary">
               Start Your Treatment
@@ -177,24 +171,56 @@ export default function Hero(): React.ReactElement {
             </a>
           </div>
 
-          {/* ── Metrics Trust Section — Count-Up Animation ─── */}
-          <div className="hero-metrics">
-            {METRICS.map((m, i) => (
-              <div className="hero-metric" key={m.label}>
-                <span className="hero-metric-value" ref={metricRefs[i].ref}>
-                  {metricRefs[i].display}
-                </span>
-                <span className="hero-metric-label">{m.label}</span>
-                {i < METRICS.length - 1 && (
-                  <span className="hero-metric-divider" aria-hidden="true" />
-                )}
-              </div>
-            ))}
-          </div>
-
         </div>
       </div>
 
     </section>
+
+    {/* ═══════════════════════════════════════════════════════
+        TRUST — Hybrid Social Proof + Metrics
+    ═══════════════════════════════════════════════════════ */}
+    <section className="trust-section" aria-label="Client trust and social proof">
+      <div className="container-juune trust-container">
+
+        {/* ── Primary Trust Signal ─────── */}
+        <div className="trust-primary">
+          <div className="trust-stars" aria-label="4.9 out of 5 stars">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} className="trust-star-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"
+                  fill="var(--color-accent)"
+                  stroke="var(--color-accent-dark)"
+                  strokeWidth="0.5"
+                />
+              </svg>
+            ))}
+          </div>
+          <p className="trust-primary-text">
+            <strong>4.9</strong> <span>from 2,000+ clients</span>
+          </p>
+        </div>
+
+        {/* ── Horizontal Divider ──────── */}
+        <hr className="trust-horizontal-divider" aria-hidden="true" />
+
+        {/* ── Secondary Trust Signals — Metrics ──────── */}
+        <div className="trust-metrics-row">
+          {METRICS.map((m, i) => (
+            <div className="trust-metric" key={m.label}>
+              <span className="trust-metric-value" ref={metricRefs[i].ref}>
+                {metricRefs[i].display}
+              </span>
+              <span className="trust-metric-label">{m.label}</span>
+              {i < METRICS.length - 1 && (
+                <span className="trust-metric-divider" aria-hidden="true" />
+              )}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+    </>
   );
 }
