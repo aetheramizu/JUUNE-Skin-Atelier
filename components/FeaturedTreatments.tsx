@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────
-   JUUNÉ Skin Atelier — Featured Treatments Section (v2)
-   • Luxury glassmorphism cards with scroll-triggered reveal
-   • Responsive grid: 1 → 2 → 3 columns
-   • Full design-system token integration
-   • Warm ambient background for true glass depth
+   JUUNÉ Skin Atelier — Featured Treatments Section
+   • Editorial layout without cards
+   • Clean text-left hierarchy
+   • Responsive 2x2 grid for perfect balance
 ───────────────────────────────────────────────────────────── */
 
 /* ── Treatment Data ──────────────────────────────────────── */
@@ -79,8 +78,8 @@ function useScrollReveal(threshold: number = 0.12): {
   return { ref, isVisible };
 }
 
-/* ── Treatment Card ──────────────────────────────────────── */
-function TreatmentCard({
+/* ── Treatment Item ──────────────────────────────────────── */
+function TreatmentItem({
   treatment,
   index,
   isVisible,
@@ -89,99 +88,68 @@ function TreatmentCard({
   index: number;
   isVisible: boolean;
 }): React.ReactElement {
+  // Add a subtle vertical offset to the second column for an editorial stagger
+  const offsetClass = index % 2 !== 0 ? "md:mt-16 lg:mt-24" : "";
+
   return (
-    <a
-      href={treatment.href}
-      id={`treatment-card-${index}`}
-      className="group relative flex flex-col rounded-2xl p-6 cursor-pointer"
+    <div
+      className={offsetClass}
       style={{
-        background: "rgba(255, 255, 255, 0.55)",
-        backdropFilter: "blur(20px) saturate(1.15)",
-        WebkitBackdropFilter: "blur(20px) saturate(1.15)",
-        border: "1px solid var(--color-border-light)",
-        boxShadow: "var(--shadow-xs)",
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 130}ms, 
-                     transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 130}ms, 
-                     box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                     border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1)`,
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-6px)";
-        e.currentTarget.style.boxShadow = "var(--shadow-md)";
-        e.currentTarget.style.borderColor = "var(--color-border)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = isVisible ? "translateY(0)" : "translateY(24px)";
-        e.currentTarget.style.boxShadow = "var(--shadow-xs)";
-        e.currentTarget.style.borderColor = "var(--color-border-light)";
+        transition: `opacity 800ms ease-[0.25,0,0.05,1] ${150 + index * 100}ms, transform 800ms ease-[0.25,0,0.05,1] ${150 + index * 100}ms`,
       }}
     >
-      {/* ── Image ─────────────────────────────────────────── */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl mb-6">
-        <Image
-          src={treatment.image}
-          alt={`${treatment.title} — JUUNÉ Skin Atelier`}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0,0.05,1)] group-hover:scale-[1.04]"
-        />
-        {/* Subtle warm gradient overlay */}
-        <div
-          className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          aria-hidden="true"
-          style={{
-            background: "linear-gradient(to top, rgba(44, 26, 14, 0.08) 0%, transparent 50%)",
-          }}
-        />
-      </div>
+      <a
+        href={treatment.href}
+        id={`treatment-item-${index}`}
+        className="group block w-full cursor-pointer"
+      >
+        {/* ── Image ─────────────────────────────────────────── */}
+        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
+          <Image
+            src={treatment.image}
+            alt={`${treatment.title} — JUUNÉ Skin Atelier`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+          {/* Subtle white overlay gradient for depth */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity duration-700"
+            aria-hidden="true"
+            style={{
+              background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 50%)",
+            }}
+          />
+        </div>
 
-      {/* ── Text Content ──────────────────────────────────── */}
-      <div className="flex flex-col flex-1 gap-3 px-0.5">
-        <h3
-          className="font-serif text-xl font-normal leading-snug tracking-[-0.01em]"
-          style={{ color: "var(--color-text-heading)" }}
-        >
-          {treatment.title}
-        </h3>
+        {/* ── Text Content ──────────────────────────────────── */}
+        <div className="flex flex-col items-start w-full mt-7">
+          <h3
+            className="font-serif text-xl sm:text-2xl font-normal tracking-tight text-neutral-800 transition-colors duration-300 group-hover:text-neutral-900"
+          >
+            {treatment.title}
+          </h3>
 
-        <p
-          className="text-sm leading-relaxed line-clamp-3"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          {treatment.description}
-        </p>
+          <p
+            className="mt-3 text-sm leading-relaxed text-neutral-500 line-clamp-3 max-w-[92%]"
+          >
+            {treatment.description}
+          </p>
 
-        {/* ── CTA ─────────────────────────────────────────── */}
-        <span
-          className="mt-auto pt-5 inline-flex items-center gap-1.5 text-[0.8125rem] font-medium tracking-[0.04em] transition-colors duration-400"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          <span className="group-hover:text-[var(--color-accent-dark)] transition-colors duration-400">
+          {/* ── CTA ─────────────────────────────────────────── */}
+          <span
+            className="mt-5 inline-block text-xs uppercase tracking-widest text-neutral-400 transition-all duration-500 ease-out group-hover:text-neutral-800 group-hover:underline underline-offset-[8px] decoration-[0.5px]"
+          >
             Learn More
           </span>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-            className="transition-all duration-400 ease-[cubic-bezier(0.25,0,0.05,1)] group-hover:translate-x-1 group-hover:text-[var(--color-accent-dark)]"
-          >
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-      </div>
-    </a>
+        </div>
+      </a>
+    </div>
   );
 }
+
 
 /* ── Section Component ───────────────────────────────────── */
 export default function FeaturedTreatments(): React.ReactElement {
@@ -190,45 +158,28 @@ export default function FeaturedTreatments(): React.ReactElement {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden py-24 flex flex-col items-center"
       aria-label="Featured Treatments"
-      style={{
-        backgroundColor: "var(--color-bg-base)",
-        paddingTop: "var(--space-32)",
-        paddingBottom: "var(--space-24)",
-        borderTop: "1px solid var(--color-border-light)",
-      }}
+      style={{ backgroundColor: "var(--color-bg-base)" }}
     >
-      {/* ── Top gradient blend — seamless transition from Trust ── */}
-      <div
-        className="absolute top-0 left-0 right-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          height: "120px",
-          background: "linear-gradient(180deg, var(--color-bg-soft) 0%, transparent 100%)",
-        }}
-      />
-
       {/* ── Ambient background — warm radials for glass depth ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          opacity: 0.5,
+          opacity: 0.6,
           background: `
-            radial-gradient(ellipse 55% 45% at 15% 55%, var(--color-bg-muted) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 50% at 85% 35%, var(--color-primary-light) 0%, transparent 65%),
-            radial-gradient(ellipse 40% 40% at 50% 80%, rgba(232, 217, 200, 0.35) 0%, transparent 70%)
+            radial-gradient(ellipse 60% 50% at 20% 40%, var(--color-bg-muted) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 50% at 80% 60%, var(--color-primary-light) 0%, transparent 65%)
           `,
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative w-full max-w-5xl mx-auto px-6 flex flex-col items-center">
         {/* ── Section Header ──────────────────────────────── */}
         <div
-          className="text-center mx-auto mb-16"
+          className="flex flex-col items-center text-center w-full max-w-2xl mx-auto mb-16"
           style={{
-            maxWidth: "480px",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.8s cubic-bezier(0.25, 0, 0.05, 1), transform 0.8s cubic-bezier(0.25, 0, 0.05, 1)",
@@ -236,7 +187,7 @@ export default function FeaturedTreatments(): React.ReactElement {
         >
           {/* Eyebrow */}
           <span
-            className="inline-block mb-5 text-xs font-medium uppercase"
+            className="inline-block mb-4 text-[0.75rem] font-medium uppercase"
             style={{
               letterSpacing: "var(--tracking-widest)",
               color: "var(--color-text-muted)",
@@ -245,19 +196,9 @@ export default function FeaturedTreatments(): React.ReactElement {
             Our Treatments
           </span>
 
-          {/* Gold divider */}
-          <hr
-            className="mx-auto mb-7 border-none"
-            style={{
-              width: "2.5rem",
-              height: "1px",
-              backgroundColor: "var(--color-accent)",
-            }}
-          />
-
           {/* Heading */}
           <h2
-            className="font-serif font-light mb-5"
+            className="font-serif font-light mb-6 text-center"
             style={{
               fontSize: "clamp(2rem, 4vw, 3rem)",
               lineHeight: 1.15,
@@ -276,11 +217,8 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Description */}
           <p
-            className="text-[0.95rem] leading-7 mx-auto"
-            style={{
-              color: "var(--color-text-muted)",
-              maxWidth: "400px",
-            }}
+            className="text-base leading-[1.8] text-center max-w-md mx-auto"
+            style={{ color: "var(--color-text-muted)" }}
           >
             Discover our curated collection of premium treatments —
             each meticulously designed to nurture, restore, and elevate
@@ -288,10 +226,10 @@ export default function FeaturedTreatments(): React.ReactElement {
           </p>
         </div>
 
-        {/* ── Treatment Cards Grid ────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {TREATMENTS.slice(0, 3).map((treatment, index) => (
-            <TreatmentCard
+        {/* ── Treatment Grid ────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 lg:gap-y-24 w-full mx-auto">
+          {TREATMENTS.map((treatment, index) => (
+            <TreatmentItem
               key={treatment.title}
               treatment={treatment}
               index={index}
@@ -300,53 +238,26 @@ export default function FeaturedTreatments(): React.ReactElement {
           ))}
         </div>
 
-        {/* ── Second Row — Centered Single Card ───────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto mt-8">
-          <div className="hidden lg:block" />
-          <TreatmentCard
-            treatment={TREATMENTS[3]}
-            index={3}
-            isVisible={isVisible}
-          />
-          <div className="hidden lg:block" />
-        </div>
-
         {/* ── Bottom CTA ──────────────────────────────────── */}
         <div
-          className="text-center mt-16"
+          className="flex justify-center w-full mt-24"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
-            transition: "opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) 750ms, transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) 750ms",
+            transition: "opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms, transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms",
           }}
         >
           <a
             href="#treatments"
             id="treatments-view-all"
-            className="btn-secondary inline-flex items-center gap-2.5"
+            className="btn-secondary inline-flex items-center justify-center gap-3 uppercase text-center"
             style={{
-              padding: "0.9rem 2.25rem",
-              fontSize: "var(--text-sm)",
+              padding: "0.85rem 2.5rem",
+              fontSize: "0.75rem",
+              letterSpacing: "0.15em"
             }}
           >
             View All Treatments
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden="true"
-              className="transition-transform duration-400 ease-[cubic-bezier(0.25,0,0.05,1)]"
-              style={{ marginLeft: "2px" }}
-            >
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
           </a>
         </div>
       </div>
