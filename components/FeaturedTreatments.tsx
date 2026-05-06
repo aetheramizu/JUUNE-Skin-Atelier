@@ -88,8 +88,8 @@ function TreatmentItem({
   index: number;
   isVisible: boolean;
 }): React.ReactElement {
-  // Add a subtle vertical offset to the second column for an editorial stagger
-  const offsetClass = index % 2 !== 0 ? "md:mt-16 lg:mt-24" : "";
+  // Add a subtle vertical offset to the second column for an editorial stagger.
+  const offsetClass = index % 2 !== 0 ? "md:mt-12 lg:mt-16" : "";
 
   return (
     <div
@@ -97,7 +97,7 @@ function TreatmentItem({
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 800ms ease-[0.25,0,0.05,1] ${150 + index * 100}ms, transform 800ms ease-[0.25,0,0.05,1] ${150 + index * 100}ms`,
+        transition: `opacity 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 100}ms, transform 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 100}ms`,
       }}
     >
       <a
@@ -106,43 +106,48 @@ function TreatmentItem({
         className="group block w-full cursor-pointer"
       >
         {/* ── Image ─────────────────────────────────────────── */}
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[10px] bg-[var(--color-bg-soft)] shadow-[0_24px_70px_rgba(44,26,14,0.08)] transition-shadow duration-700 group-hover:shadow-[0_30px_90px_rgba(44,26,14,0.13)]">
           <Image
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 46vw, 540px"
+            className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.035]"
           />
           {/* Subtle white overlay gradient for depth */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity duration-700"
+            className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-85"
             aria-hidden="true"
             style={{
-              background: "linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 50%)",
+              background: "linear-gradient(180deg, rgba(250, 248, 245, 0.14) 0%, transparent 38%, rgba(44, 26, 14, 0.12) 100%)",
             }}
           />
         </div>
 
         {/* ── Text Content ──────────────────────────────────── */}
-        <div className="flex flex-col items-start w-full mt-7">
+        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.12)] pt-6 mt-7">
           <h3
-            className="font-serif text-xl sm:text-2xl font-normal tracking-tight text-neutral-800 transition-colors duration-300 group-hover:text-neutral-900"
+            className="font-serif text-[1.65rem] sm:text-[1.9rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
           >
             {treatment.title}
           </h3>
 
           <p
-            className="mt-3 text-sm leading-relaxed text-neutral-500 line-clamp-3 max-w-[92%]"
+            className="mt-4 max-w-[34rem] text-[0.95rem] leading-[1.85] line-clamp-3"
+            style={{ color: "color-mix(in srgb, var(--color-text-body) 82%, var(--color-text-muted) 18%)" }}
           >
             {treatment.description}
           </p>
 
           {/* ── CTA ─────────────────────────────────────────── */}
           <span
-            className="mt-5 inline-block text-xs uppercase tracking-widest text-neutral-400 transition-all duration-500 ease-out group-hover:text-neutral-800 group-hover:underline underline-offset-[8px] decoration-[0.5px]"
+            className="mt-7 inline-flex items-center gap-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
           >
             Learn More
+            <span
+              className="h-px w-8 bg-[rgba(44,26,14,0.22)] transition-all duration-500 group-hover:w-12 group-hover:bg-[var(--color-accent-dark)]"
+              aria-hidden="true"
+            />
           </span>
         </div>
       </a>
@@ -158,7 +163,7 @@ export default function FeaturedTreatments(): React.ReactElement {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden py-24 flex flex-col items-center"
+      className="relative overflow-hidden py-28 sm:py-32 lg:py-40 flex flex-col items-center"
       aria-label="Featured Treatments"
       style={{ backgroundColor: "var(--color-bg-base)" }}
     >
@@ -167,18 +172,18 @@ export default function FeaturedTreatments(): React.ReactElement {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          opacity: 0.6,
+          opacity: 0.46,
           background: `
-            radial-gradient(ellipse 60% 50% at 20% 40%, var(--color-bg-muted) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 50% at 80% 60%, var(--color-primary-light) 0%, transparent 65%)
+            radial-gradient(ellipse 54% 44% at 18% 34%, var(--color-bg-muted) 0%, transparent 72%),
+            radial-gradient(ellipse 42% 46% at 84% 66%, var(--color-primary-light) 0%, transparent 68%)
           `,
         }}
       />
 
-      <div className="relative w-full max-w-5xl mx-auto px-6 flex flex-col items-center">
+      <div className="relative w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
         {/* ── Section Header ──────────────────────────────── */}
         <div
-          className="flex flex-col items-center text-center w-full max-w-2xl mx-auto mb-16"
+          className="flex flex-col items-center text-center w-full max-w-3xl mx-auto mb-20 lg:mb-28"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(20px)",
@@ -187,10 +192,10 @@ export default function FeaturedTreatments(): React.ReactElement {
         >
           {/* Eyebrow */}
           <span
-            className="inline-block mb-4 text-[0.75rem] font-medium uppercase"
+            className="inline-block mb-5 text-[0.72rem] font-medium uppercase"
             style={{
               letterSpacing: "var(--tracking-widest)",
-              color: "var(--color-text-muted)",
+              color: "var(--color-accent-dark)",
             }}
           >
             Our Treatments
@@ -198,11 +203,10 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Heading */}
           <h2
-            className="font-serif font-light mb-6 text-center"
+            className="font-serif text-[2.5rem] sm:text-[3.25rem] lg:text-[4rem] font-light mb-7 text-center"
             style={{
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              lineHeight: 1.15,
-              letterSpacing: "-0.015em",
+              lineHeight: 1.02,
+              letterSpacing: "0",
               color: "var(--color-text-heading)",
             }}
           >
@@ -217,8 +221,8 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Description */}
           <p
-            className="text-base leading-[1.8] text-center max-w-md mx-auto"
-            style={{ color: "var(--color-text-muted)" }}
+            className="text-[1rem] sm:text-[1.05rem] leading-[1.9] text-center max-w-xl mx-auto"
+            style={{ color: "color-mix(in srgb, var(--color-text-body) 78%, var(--color-text-muted) 22%)" }}
           >
             Discover our curated collection of premium treatments —
             each meticulously designed to nurture, restore, and elevate
@@ -227,7 +231,7 @@ export default function FeaturedTreatments(): React.ReactElement {
         </div>
 
         {/* ── Treatment Grid ────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 lg:gap-y-24 w-full mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-20 sm:gap-y-24 lg:gap-y-32 w-full mx-auto">
           {TREATMENTS.map((treatment, index) => (
             <TreatmentItem
               key={treatment.title}
@@ -240,7 +244,7 @@ export default function FeaturedTreatments(): React.ReactElement {
 
         {/* ── Bottom CTA ──────────────────────────────────── */}
         <div
-          className="flex justify-center w-full mt-24"
+          className="flex justify-center w-full mt-24 lg:mt-32"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
@@ -250,14 +254,18 @@ export default function FeaturedTreatments(): React.ReactElement {
           <a
             href="#treatments"
             id="treatments-view-all"
-            className="btn-secondary inline-flex items-center justify-center gap-3 uppercase text-center"
+            className="btn-secondary group inline-flex items-center justify-center gap-4 border-[rgba(44,26,14,0.22)] bg-[rgba(250,248,245,0.36)] uppercase text-center transition-transform duration-500 hover:-translate-y-0.5 hover:bg-[rgba(201,169,110,0.06)]"
             style={{
-              padding: "0.85rem 2.5rem",
-              fontSize: "0.75rem",
-              letterSpacing: "0.15em"
+              padding: "0.95rem 2.75rem",
+              fontSize: "0.72rem",
+              letterSpacing: "0.18em"
             }}
           >
             View All Treatments
+            <span
+              className="h-px w-8 bg-[rgba(44,26,14,0.24)] transition-all duration-500 group-hover:w-12 group-hover:bg-[var(--color-accent-dark)]"
+              aria-hidden="true"
+            />
           </a>
         </div>
       </div>
