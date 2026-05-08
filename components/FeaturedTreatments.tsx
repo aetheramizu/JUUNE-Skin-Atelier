@@ -23,28 +23,28 @@ const TREATMENTS: Treatment[] = [
     title: "Facial Treatment",
     description:
       "A deeply personalised facial ritual designed to restore luminosity, refine texture, and reveal your skin's natural radiance.",
-    image: "/treatment-facial.png",
+    image: "/treatment-facial-v2.png",
     href: "#facial-treatment",
   },
   {
     title: "Botox & Filler",
     description:
       "Precision-driven aesthetic enhancements that subtly restore volume, smooth fine lines, and preserve your natural expression.",
-    image: "/treatment-botox.png",
+    image: "/treatment-botox-v2.png",
     href: "#botox-filler",
   },
   {
     title: "Acne Treatment",
     description:
       "Advanced clinical protocols targeting breakouts at their source — clearing, calming, and preventing future imperfections.",
-    image: "/treatment-acne.png",
+    image: "/treatment-acne-v2.png",
     href: "#acne-treatment",
   },
   {
     title: "Skin Rejuvenation",
     description:
       "Next-generation therapies that stimulate collagen renewal, restore elasticity, and unveil a visibly younger complexion.",
-    image: "/treatment-rejuvenation.png",
+    image: "/treatment-rejuvenation-v2.png",
     href: "#skin-rejuvenation",
   },
 ];
@@ -106,7 +106,7 @@ function TreatmentItem({
         className="group block w-full cursor-pointer"
       >
         {/* ── Image ─────────────────────────────────────────── */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[10px] bg-[var(--color-bg-soft)] shadow-[0_24px_70px_rgba(44,26,14,0.08)] transition-shadow duration-700 group-hover:shadow-[0_30px_90px_rgba(44,26,14,0.13)]">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] bg-[var(--color-bg-soft)] shadow-[0_24px_70px_rgba(44,26,14,0.08)] transition-shadow duration-700 group-hover:shadow-[0_30px_90px_rgba(44,26,14,0.13)]">
           <Image
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
@@ -119,15 +119,15 @@ function TreatmentItem({
             className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-85"
             aria-hidden="true"
             style={{
-              background: "linear-gradient(180deg, rgba(250, 248, 245, 0.14) 0%, transparent 38%, rgba(44, 26, 14, 0.12) 100%)",
+              background: "linear-gradient(180deg, rgba(250, 248, 245, 0.1) 0%, transparent 40%, rgba(44, 26, 14, 0.08) 100%)",
             }}
           />
         </div>
 
         {/* ── Text Content ──────────────────────────────────── */}
-        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.12)] pt-6 mt-7">
+        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.07)] pt-6 mt-7">
           <h3
-            className="font-serif text-[1.65rem] sm:text-[1.9rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
+            className="font-serif text-[1.75rem] sm:text-[2rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
           >
             {treatment.title}
           </h3>
@@ -141,11 +141,11 @@ function TreatmentItem({
 
           {/* ── CTA ─────────────────────────────────────────── */}
           <span
-            className="mt-7 inline-flex items-center gap-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
+            className="mt-7 inline-flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
           >
             Learn More
             <span
-              className="h-px w-8 bg-[rgba(44,26,14,0.22)] transition-all duration-500 group-hover:w-12 group-hover:bg-[var(--color-accent-dark)]"
+              className="h-px w-10 bg-[rgba(44,26,14,0.2)] transition-all duration-500 group-hover:w-14 group-hover:bg-[var(--color-accent-dark)]"
               aria-hidden="true"
             />
           </span>
@@ -163,9 +163,9 @@ export default function FeaturedTreatments(): React.ReactElement {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden py-28 sm:py-32 lg:py-40 flex flex-col items-center"
+      className="relative overflow-hidden pt-36 sm:pt-40 lg:pt-48 pb-28 sm:pb-32 lg:pb-40 flex flex-col items-center"
       aria-label="Featured Treatments"
-      style={{ backgroundColor: "var(--color-bg-base)" }}
+      style={{ backgroundColor: "var(--color-bg-base)", borderTop: "1px solid var(--color-border-light)" }}
     >
       {/* ── Ambient background — warm radials for glass depth ── */}
       <div
@@ -254,7 +254,7 @@ export default function FeaturedTreatments(): React.ReactElement {
           <a
             href="#treatments"
             id="treatments-view-all"
-            className="btn-secondary group inline-flex items-center justify-center gap-4 border-[rgba(44,26,14,0.22)] bg-[rgba(250,248,245,0.36)] uppercase text-center transition-transform duration-500 hover:-translate-y-0.5 hover:bg-[rgba(201,169,110,0.06)]"
+            className="btn-secondary group inline-flex items-center justify-center gap-4 border-[rgba(44,26,14,0.18)] bg-[rgba(250,248,245,0.36)] uppercase text-center transition-transform duration-500 hover:-translate-y-0.5 hover:bg-[rgba(201,169,110,0.06)]"
             style={{
               padding: "0.95rem 2.75rem",
               fontSize: "0.72rem",
@@ -263,7 +263,7 @@ export default function FeaturedTreatments(): React.ReactElement {
           >
             View All Treatments
             <span
-              className="h-px w-8 bg-[rgba(44,26,14,0.24)] transition-all duration-500 group-hover:w-12 group-hover:bg-[var(--color-accent-dark)]"
+              className="h-px w-10 bg-[rgba(44,26,14,0.2)] transition-all duration-500 group-hover:w-14 group-hover:bg-[var(--color-accent-dark)]"
               aria-hidden="true"
             />
           </a>

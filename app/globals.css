@@ -1121,11 +1121,11 @@ video {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.38;
   background:
     radial-gradient(ellipse 56% 48% at 20% 30%, var(--color-bg-muted) 0%, transparent 70%),
-    radial-gradient(ellipse 44% 50% at 82% 62%, var(--color-primary-light) 0%, transparent 65%),
-    radial-gradient(ellipse 36% 42% at 50% 80%, rgba(232, 217, 200, 0.3) 0%, transparent 70%);
+    radial-gradient(ellipse 38% 44% at 82% 62%, var(--color-primary-light) 0%, transparent 72%),
+    radial-gradient(ellipse 30% 36% at 50% 80%, rgba(232, 217, 200, 0.2) 0%, transparent 70%);
 }
 
 /* ── Container ───────────────────────────────────────────── */
@@ -1256,16 +1256,16 @@ video {
   filter: saturate(0.6) brightness(0.93) contrast(1.04);
 }
 
-/* After: luminous, warm golden glow */
+/* After: luminous, naturally radiant */
 .results-image-overlay--after {
   background: linear-gradient(180deg,
-    rgba(232, 217, 200, 0.08) 0%,
-    rgba(201, 169, 110, 0.06) 50%,
-    rgba(250, 248, 245, 0.1) 100%);
+    rgba(250, 248, 245, 0.04) 0%,
+    rgba(232, 217, 200, 0.03) 50%,
+    rgba(250, 248, 245, 0.06) 100%);
 }
 
 .results-image--after {
-  filter: saturate(1.12) brightness(1.05);
+  filter: saturate(1.06) brightness(1.03);
 }
 
 /* ── Image Labels ────────────────────────────────────────── */
