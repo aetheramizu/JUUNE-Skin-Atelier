@@ -163,9 +163,9 @@ export default function FeaturedTreatments(): React.ReactElement {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden pt-52 sm:pt-60 lg:pt-72 pb-28 sm:pb-32 lg:pb-40 flex flex-col items-center"
+      className="relative overflow-hidden flex flex-col items-center"
       aria-label="Featured Treatments"
-      style={{ backgroundColor: "var(--color-bg-soft)", borderTop: "1px solid var(--color-border-light)" }}
+      style={{ backgroundColor: "var(--color-bg-soft)", borderTop: "1px solid var(--color-border-light)", paddingTop: "clamp(6rem, 8vw, 8rem)", paddingBottom: "clamp(5rem, 7vw, 7rem)" }}
     >
       {/* ── Ambient background — warm radials for glass depth ── */}
       <div
@@ -183,16 +183,16 @@ export default function FeaturedTreatments(): React.ReactElement {
       <div className="relative w-full max-w-[1080px] mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
         {/* ── Section Header ──────────────────────────────── */}
         <div
-          className="flex flex-col items-center text-center w-full max-w-3xl mx-auto mb-28 lg:mb-36"
+          className="flex flex-col items-center text-center w-full max-w-3xl mx-auto"
           style={{
+            marginBottom: "clamp(3rem, 5vw, 4.5rem)",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.8s cubic-bezier(0.25, 0, 0.05, 1), transform 0.8s cubic-bezier(0.25, 0, 0.05, 1)",
           }}
         >
-          {/* Eyebrow */}
           <span
-            className="inline-block mb-5 text-[0.72rem] font-medium uppercase"
+            className="inline-block mb-8 text-[0.72rem] font-medium uppercase"
             style={{
               letterSpacing: "var(--tracking-widest)",
               color: "var(--color-accent-dark)",
@@ -203,7 +203,7 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Heading */}
           <h2
-            className="font-serif text-[2.5rem] sm:text-[3.25rem] lg:text-[4rem] font-light mb-7 text-center"
+            className="font-serif text-[2.5rem] sm:text-[3.25rem] lg:text-[4rem] font-light mb-12 text-center"
             style={{
               lineHeight: 1.02,
               letterSpacing: "0",
@@ -244,8 +244,9 @@ export default function FeaturedTreatments(): React.ReactElement {
 
         {/* ── Bottom CTA ──────────────────────────────────── */}
         <div
-          className="flex justify-center w-full mt-32 lg:mt-40"
+          className="flex justify-center w-full"
           style={{
+            marginTop: "clamp(5rem, 7vw, 6.5rem)",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms, transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms",
