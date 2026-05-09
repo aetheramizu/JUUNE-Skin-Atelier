@@ -178,7 +178,7 @@ export default function ResultsSection(): React.ReactElement {
           <div className="results-showcase-col results-showcase-col--before">
             <div className="results-image-wrapper results-image--before">
               <Image
-                src="/hero-portrait-fix.png"
+                src="/results-before-v1.png"
                 alt="Before treatment — natural skin with visible texture"
                 fill
                 sizes="(max-width: 768px) 86vw, 42vw"
@@ -194,7 +194,7 @@ export default function ResultsSection(): React.ReactElement {
           <div className="results-showcase-col results-showcase-col--after">
             <div className="results-image-wrapper results-image--after">
               <Image
-                src="/hero-portrait-fix.png"
+                src="/results-after-v1.png"
                 alt="After treatment — visibly radiant, luminous skin"
                 fill
                 sizes="(max-width: 768px) 86vw, 42vw"
