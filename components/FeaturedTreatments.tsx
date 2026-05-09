@@ -89,7 +89,7 @@ function TreatmentItem({
   isVisible: boolean;
 }): React.ReactElement {
   // Add a subtle vertical offset to the second column for an editorial stagger.
-  const offsetClass = index % 2 !== 0 ? "md:mt-12 lg:mt-16" : "";
+  const offsetClass = index % 2 !== 0 ? "md:mt-10 lg:mt-14" : "";
 
   return (
     <div
@@ -106,7 +106,7 @@ function TreatmentItem({
         className="group block w-full cursor-pointer"
       >
         {/* ── Image ─────────────────────────────────────────── */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] bg-[var(--color-bg-soft)] shadow-[0_24px_70px_rgba(44,26,14,0.08)] transition-shadow duration-700 group-hover:shadow-[0_30px_90px_rgba(44,26,14,0.13)]">
+        <div className="relative aspect-[6/7] w-full overflow-hidden rounded-[14px] bg-[var(--color-bg-soft)] shadow-[0_20px_60px_rgba(44,26,14,0.06)] transition-shadow duration-700 group-hover:shadow-[0_26px_80px_rgba(44,26,14,0.1)]">
           <Image
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
@@ -125,15 +125,15 @@ function TreatmentItem({
         </div>
 
         {/* ── Text Content ──────────────────────────────────── */}
-        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.07)] pt-6 mt-7">
+        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.07)] pt-5 mt-6">
           <h3
-            className="font-serif text-[1.75rem] sm:text-[2rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
+            className="font-serif text-[1.6rem] sm:text-[1.8rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
           >
             {treatment.title}
           </h3>
 
           <p
-            className="mt-4 max-w-[34rem] text-[0.95rem] leading-[1.85] line-clamp-3"
+            className="mt-3.5 max-w-[30rem] text-[0.92rem] leading-[1.8] line-clamp-3"
             style={{ color: "color-mix(in srgb, var(--color-text-body) 82%, var(--color-text-muted) 18%)" }}
           >
             {treatment.description}
@@ -141,7 +141,7 @@ function TreatmentItem({
 
           {/* ── CTA ─────────────────────────────────────────── */}
           <span
-            className="mt-7 inline-flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
+            className="mt-5 inline-flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
           >
             Learn More
             <span
@@ -163,9 +163,9 @@ export default function FeaturedTreatments(): React.ReactElement {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative overflow-hidden pt-36 sm:pt-40 lg:pt-48 pb-28 sm:pb-32 lg:pb-40 flex flex-col items-center"
+      className="relative overflow-hidden pt-52 sm:pt-60 lg:pt-72 pb-28 sm:pb-32 lg:pb-40 flex flex-col items-center"
       aria-label="Featured Treatments"
-      style={{ backgroundColor: "var(--color-bg-base)", borderTop: "1px solid var(--color-border-light)" }}
+      style={{ backgroundColor: "var(--color-bg-soft)", borderTop: "1px solid var(--color-border-light)" }}
     >
       {/* ── Ambient background — warm radials for glass depth ── */}
       <div
@@ -180,10 +180,10 @@ export default function FeaturedTreatments(): React.ReactElement {
         }}
       />
 
-      <div className="relative w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
+      <div className="relative w-full max-w-[1080px] mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
         {/* ── Section Header ──────────────────────────────── */}
         <div
-          className="flex flex-col items-center text-center w-full max-w-3xl mx-auto mb-20 lg:mb-28"
+          className="flex flex-col items-center text-center w-full max-w-3xl mx-auto mb-28 lg:mb-36"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(20px)",
@@ -231,7 +231,7 @@ export default function FeaturedTreatments(): React.ReactElement {
         </div>
 
         {/* ── Treatment Grid ────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-20 sm:gap-y-24 lg:gap-y-32 w-full mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14 lg:gap-x-24 gap-y-16 sm:gap-y-20 lg:gap-y-28 w-full mx-auto">
           {TREATMENTS.map((treatment, index) => (
             <TreatmentItem
               key={treatment.title}
@@ -244,7 +244,7 @@ export default function FeaturedTreatments(): React.ReactElement {
 
         {/* ── Bottom CTA ──────────────────────────────────── */}
         <div
-          className="flex justify-center w-full mt-24 lg:mt-32"
+          className="flex justify-center w-full mt-32 lg:mt-40"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
