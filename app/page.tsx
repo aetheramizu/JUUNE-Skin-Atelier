@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar"
 import Hero   from "../components/Hero"
 import FeaturedTreatments from "../components/FeaturedTreatments"
 import ResultsSection from "../components/ResultsSection"
+import Testimonials from "../components/Testimonials"
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         <Hero />
         <FeaturedTreatments />
         <ResultsSection />
+        <Testimonials />
       </main>
     </>
   )
