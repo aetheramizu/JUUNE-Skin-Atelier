@@ -109,7 +109,7 @@ function FeaturedCard({
       aria-label={`Testimonial from ${testimonial.name}`}
     >
       {/* Opening quote */}
-      <QuoteMark size={52} opacity={0.14} />
+      <QuoteMark size={52} opacity={0.08} />
 
       {/* Quote body */}
       <blockquote
@@ -191,7 +191,7 @@ function SecondaryCard({
       }}
       aria-label={`Testimonial from ${testimonial.name}`}
     >
-      <QuoteMark size={32} opacity={0.1} />
+      <QuoteMark size={32} opacity={0.06} />
 
       <blockquote
         style={{
@@ -371,7 +371,7 @@ export default function Testimonials(): React.ReactElement {
         @media (min-width: 768px) {
           .testimonials-grid {
             grid-template-columns: 1.15fr 1fr;
-            align-items: start;
+            align-items: center;
           }
           .testimonials-featured {
             padding-right: clamp(2rem, 4vw, 3.5rem);
@@ -381,11 +381,9 @@ export default function Testimonials(): React.ReactElement {
             border-left: 1px solid var(--color-border-light);
           }
         }
-        @media (max-width: 767px) {
-          .testimonials-stack article:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-          }
+        .testimonials-stack article:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
         }
       `}</style>
     </section>
