@@ -5,6 +5,7 @@ import ResultsSection from "../components/ResultsSection"
 import Testimonials from "../components/Testimonials"
 import AboutDoctor from "../components/AboutDoctor"
 import ClinicExperience from "../components/ClinicExperience"
+import FinalCTA from "../components/FinalCTA"
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Testimonials />
         <AboutDoctor />
         <ClinicExperience />
+        <FinalCTA />
       </main>
     </>
   )
