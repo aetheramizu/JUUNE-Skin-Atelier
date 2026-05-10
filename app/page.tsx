@@ -4,6 +4,7 @@ import FeaturedTreatments from "../components/FeaturedTreatments"
 import ResultsSection from "../components/ResultsSection"
 import Testimonials from "../components/Testimonials"
 import AboutDoctor from "../components/AboutDoctor"
+import ClinicExperience from "../components/ClinicExperience"
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <ResultsSection />
         <Testimonials />
         <AboutDoctor />
+        <ClinicExperience />
       </main>
     </>
   )
