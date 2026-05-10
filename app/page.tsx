@@ -6,6 +6,7 @@ import Testimonials from "../components/Testimonials"
 import AboutDoctor from "../components/AboutDoctor"
 import ClinicExperience from "../components/ClinicExperience"
 import FinalCTA from "../components/FinalCTA"
+import Footer from "../components/Footer"
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <ClinicExperience />
         <FinalCTA />
       </main>
+      <Footer />
     </>
   )
 }
