@@ -1104,15 +1104,15 @@ video {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   RESULTS SECTION — Editorial Before/After + Testimonial
-   Luxury CTA · Outcome Metrics · Glassmorphism Badge
+   RESULTS SECTION — Interactive Before/After Slider
+   Compact layout · Integrated metrics · No testimonial
 ═══════════════════════════════════════════════════════════════ */
 
 /* ── Section Shell ───────────────────────────────────────── */
 .results-section {
   position: relative;
   overflow: hidden;
-  padding-block: var(--space-32) var(--space-32);
+  padding-block: var(--space-24) var(--space-24);
   background-color: var(--color-bg-base);
 }
 
@@ -1148,7 +1148,7 @@ video {
   align-items: center;
   text-align: center;
   max-width: 42rem;
-  margin-bottom: var(--space-24);
+  margin-bottom: var(--space-12);
 }
 
 .results-eyebrow {
@@ -1190,103 +1190,128 @@ video {
   max-width: 36rem;
 }
 
-/* ── Before/After Showcase ───────────────────────────────── */
-.results-showcase {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
-  width: 100%;
-  max-width: 56rem;
-  margin-bottom: var(--space-24);
-  position: relative;
-}
+/* ═══════════════════════════════════════════════════════════
+   INTERACTIVE BEFORE/AFTER SLIDER
+═══════════════════════════════════════════════════════════ */
 
-.results-showcase-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-/* Stagger — second column sits slightly lower for editorial rhythm */
-.results-showcase-col--after {
-  margin-top: var(--space-12);
-}
-
-.results-image-wrapper {
+.results-slider {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  max-width: 48rem;
+  aspect-ratio: 4 / 3;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background-color: var(--color-bg-soft);
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+  margin-bottom: var(--space-10);
   box-shadow:
     0 24px 70px rgba(44, 26, 14, 0.08),
     0 4px 16px rgba(44, 26, 14, 0.04);
 }
 
-.results-image {
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 1.2s ease-out;
-}
-
-.results-image-wrapper:hover .results-image {
-  transform: scale(1.03);
-}
-
-/* ── CSS Filter Overlays — Before / After differentiation ── */
-.results-image-overlay {
+.results-slider-img {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-slow) var(--ease-luxury);
 }
 
-/* Before: muted, cooler, less vibrant */
-.results-image-overlay--before {
-  /* Removed grey overlay as image provides natural before look */
+.results-slider-photo {
+  object-fit: cover;
+  object-position: center top;
 }
 
-.results-image--before {
-  /* Removed desaturation filter */
-}
-
-/* After: luminous, naturally radiant */
-.results-image-overlay--after {
-  background: linear-gradient(180deg,
-    rgba(250, 248, 245, 0.04) 0%,
-    rgba(232, 217, 200, 0.03) 50%,
-    rgba(250, 248, 245, 0.06) 100%);
-}
-
-.results-image--after {
-  filter: saturate(1.06) brightness(1.03);
-}
-
-/* ── Image Labels ────────────────────────────────────────── */
-.results-image-label {
+/* ── Slider Labels ───────────────────────────────────────── */
+.results-slider-label {
+  position: absolute;
+  top: 1rem;
+  z-index: 3;
   font-family: var(--font-body);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
 }
 
-/* ── Floating Treatment Badge (glassmorphism) ────────────── */
-.results-treatment-badge {
+.results-slider-label--before {
+  left: 1.25rem;
+}
+
+.results-slider-label--after {
+  right: 1.25rem;
+}
+
+/* ── Slider Handle ───────────────────────────────────────── */
+.results-slider-handle {
   position: absolute;
-  bottom: 8%;
-  left: 50%;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
   transform: translateX(-50%);
-  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 14px 28px;
-  border-radius: var(--radius-lg);
+  justify-content: center;
+  outline: none;
+}
+
+.results-slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.results-slider-grip {
+  position: relative;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  border: 1px solid rgba(232, 217, 200, 0.5);
+  box-shadow:
+    0 4px 16px rgba(44, 26, 14, 0.12),
+    0 1px 4px rgba(44, 26, 14, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: box-shadow var(--duration-base) var(--ease-smooth),
+    transform var(--duration-base) var(--ease-smooth);
+}
+
+.results-slider-grip:hover,
+.results-slider-handle:focus-visible .results-slider-grip {
+  box-shadow:
+    0 6px 24px rgba(44, 26, 14, 0.18),
+    0 2px 8px rgba(44, 26, 14, 0.08);
+  transform: scale(1.06);
+}
+
+.results-slider-handle:focus-visible .results-slider-grip {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── Floating Treatment Badge ────────────────────────────── */
+.results-slider-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.25rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(18px) saturate(1.2);
   -webkit-backdrop-filter: blur(18px) saturate(1.2);
@@ -1294,87 +1319,36 @@ video {
   box-shadow:
     0 4px 16px rgba(44, 26, 14, 0.08),
     0 1px 3px rgba(44, 26, 14, 0.04);
-  animation: badgeFloat 7s var(--ease-smooth) infinite;
+  pointer-events: none;
 }
 
-.results-badge-title {
+.results-slider-badge-title {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text-heading);
   line-height: 1.2;
 }
 
-.results-badge-detail {
+.results-slider-badge-detail {
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 500;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
-/* ── Testimonial ─────────────────────────────────────────── */
-.results-testimonial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 38rem;
-  margin-bottom: var(--space-24);
-  position: relative;
-}
+/* ═══════════════════════════════════════════════════════════
+   OUTCOME METRICS
+═══════════════════════════════════════════════════════════ */
 
-.results-quote-mark {
-  font-family: var(--font-display);
-  font-size: 4.5rem;
-  line-height: 1;
-  color: var(--color-accent-light);
-  user-select: none;
-  margin-bottom: -0.5rem;
-}
-
-.results-quote {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.75;
-  color: var(--color-text-body);
-  margin-bottom: var(--space-8);
-}
-
-.results-cite {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.results-cite-name {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 500;
-  color: var(--color-accent-dark);
-}
-
-.results-cite-detail {
-  font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-/* ── Outcome Metrics ─────────────────────────────────────── */
 .results-outcomes {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-8);
-  margin-bottom: var(--space-16);
+  margin-bottom: var(--space-10);
   width: 100%;
   max-width: 44rem;
 }
@@ -1482,20 +1456,14 @@ video {
   transform: translateX(4px);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   RESULTS — Responsive
+═══════════════════════════════════════════════════════════ */
 
-/* ── Results — Tablet ────────────────────────────────────── */
+/* ── Tablet ──────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .results-section {
-    padding-block: var(--space-24);
-  }
-
-  .results-showcase {
-    gap: var(--space-6);
-    max-width: 44rem;
-  }
-
-  .results-showcase-col--after {
-    margin-top: var(--space-8);
+    padding-block: var(--space-16);
   }
 
   .results-outcome {
@@ -1507,14 +1475,14 @@ video {
   }
 }
 
-/* ── Results — Mobile ────────────────────────────────────── */
+/* ── Mobile ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .results-section {
-    padding-block: var(--space-16) var(--space-24);
+    padding-block: var(--space-16) var(--space-16);
   }
 
   .results-header {
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-8);
   }
 
   .results-headline {
@@ -1525,40 +1493,35 @@ video {
     font-size: 0.95rem;
   }
 
-  /* Showcase stacks vertically */
-  .results-showcase {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    max-width: 24rem;
-    margin-inline: auto;
-    margin-bottom: var(--space-16);
+  /* Slider adapts to mobile */
+  .results-slider {
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-8);
   }
 
-  .results-showcase-col--after {
-    margin-top: 0;
+  .results-slider-grip {
+    width: 36px;
+    height: 36px;
   }
 
-  /* Badge repositions */
-  .results-treatment-badge {
-    padding: 10px 20px;
-    bottom: 4%;
+  .results-slider-grip svg {
+    width: 14px;
+    height: 14px;
   }
 
-  .results-badge-title {
-    font-size: 0.95rem;
+  .results-slider-badge {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    padding: 8px 14px;
   }
 
-  /* Testimonial */
-  .results-testimonial {
-    margin-bottom: var(--space-16);
+  .results-slider-badge-title {
+    font-size: 0.82rem;
   }
 
-  .results-quote-mark {
-    font-size: 3.5rem;
-  }
-
-  .results-quote {
-    font-size: 1.05rem;
+  .results-slider-badge-detail {
+    font-size: 0.55rem;
   }
 
   /* Metrics stack vertically */
@@ -1593,21 +1556,33 @@ video {
   }
 }
 
-/* ── Results — Small Mobile ──────────────────────────────── */
+/* ── Small Mobile ────────────────────────────────────────── */
 @media (max-width: 480px) {
   .results-headline {
     font-size: clamp(1.65rem, 7.5vw, 2rem);
   }
 
-  .results-treatment-badge {
-    padding: 8px 16px;
+  .results-slider-badge {
+    padding: 6px 12px;
   }
 
-  .results-badge-title {
-    font-size: 0.88rem;
+  .results-slider-badge-title {
+    font-size: 0.76rem;
   }
 
-  .results-badge-detail {
-    font-size: 0.58rem;
+  .results-slider-badge-detail {
+    font-size: 0.52rem;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+

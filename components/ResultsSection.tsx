@@ -4,12 +4,11 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────
-   JUUNÉ Skin Atelier — Results Section
-   • Editorial before/after showcase
-   • Minimal testimonial snippet
-   • Treatment outcome metrics
-   • Luxury CTA
-   • 100% design-system tokens from globals.css
+   JUUNÉ Skin Atelier — Results Section (Redesigned)
+   • Interactive before/after slider
+   • Compact single-container layout
+   • Integrated outcome metrics
+   • No testimonial (handled by Testimonials section)
 ───────────────────────────────────────────────────────────── */
 
 /* ── Scroll Reveal Hook ──────────────────────────────────── */
@@ -105,11 +104,138 @@ const OUTCOMES = [
   { end: 94, suffix: "%", label: "Client Satisfaction", duration: 1000 },
 ] as const;
 
+/* ── Before/After Slider ─────────────────────────────────── */
+function BeforeAfterSlider({
+  isVisible,
+}: {
+  isVisible: boolean;
+}): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [sliderPos, setSliderPos] = useState(50); // percentage
+  const isDragging = useRef(false);
+
+  const updateSlider = useCallback((clientX: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const pct = Math.max(5, Math.min(95, (x / rect.width) * 100));
+    setSliderPos(pct);
+  }, []);
+
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      isDragging.current = true;
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+      updateSlider(e.clientX);
+    },
+    [updateSlider]
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!isDragging.current) return;
+      e.preventDefault();
+      updateSlider(e.clientX);
+    },
+    [updateSlider]
+  );
+
+  const handlePointerUp = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  // Keyboard accessibility
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      setSliderPos((p) => Math.max(5, p - 2));
+    } else if (e.key === "ArrowRight") {
+      setSliderPos((p) => Math.min(95, p + 2));
+    }
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="results-slider"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(28px)",
+        transition:
+          "opacity 1s cubic-bezier(0.25, 0, 0.05, 1) 0.15s, transform 1s cubic-bezier(0.25, 0, 0.05, 1) 0.15s",
+      }}
+    >
+      {/* After image — full background */}
+      <div className="results-slider-img results-slider-img--after">
+        <Image
+          src="/results-after-v2.png"
+          alt="After treatment — visibly radiant, luminous skin"
+          fill
+          sizes="(max-width: 768px) 92vw, 48rem"
+          className="results-slider-photo"
+          style={{ filter: "saturate(1.06) brightness(1.03)" }}
+        />
+      </div>
+
+      {/* Before image — clipped by slider position */}
+      <div
+        className="results-slider-img results-slider-img--before"
+        style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
+      >
+        <Image
+          src="/results-before-v2.png"
+          alt="Before treatment — natural skin with visible texture"
+          fill
+          sizes="(max-width: 768px) 92vw, 48rem"
+          className="results-slider-photo"
+        />
+      </div>
+
+      {/* Labels */}
+      <span className="results-slider-label results-slider-label--before">Before</span>
+      <span className="results-slider-label results-slider-label--after">After</span>
+
+      {/* Slider handle */}
+      <div
+        className="results-slider-handle"
+        style={{ left: `${sliderPos}%` }}
+        role="slider"
+        aria-label="Before and after comparison slider"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(sliderPos)}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        {/* Vertical line */}
+        <div className="results-slider-line" />
+
+        {/* Grip circle */}
+        <div className="results-slider-grip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 5l-5 7 5 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M16 5l5 7-5 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Floating treatment badge */}
+      <div className="results-slider-badge" role="img" aria-label="Facial Rejuvenation treatment — 6 sessions">
+        <span className="results-slider-badge-title">Facial Rejuvenation</span>
+        <span className="results-slider-badge-detail">6 Sessions · 12 Weeks</span>
+      </div>
+    </div>
+  );
+}
+
 /* ── Component ────────────────────────────────────────────── */
 export default function ResultsSection(): React.ReactElement {
   const { ref: sectionRef, isVisible } = useScrollReveal(0.06);
   const { ref: showcaseRef, isVisible: showcaseVisible } = useScrollReveal(0.12);
-  const { ref: testimonialsRef, isVisible: testimonialsVisible } = useScrollReveal(0.1);
   const { ref: metricsRef, isVisible: metricsVisible } = useScrollReveal(0.15);
 
   const outcome0 = useCountUp(OUTCOMES[0].end, OUTCOMES[0].duration, OUTCOMES[0].suffix);
@@ -162,86 +288,17 @@ export default function ResultsSection(): React.ReactElement {
         </div>
 
         {/* ═══════════════════════════════════════════════════
-            BEFORE / AFTER SHOWCASE — Editorial Comparison
+            BEFORE / AFTER — Interactive Slider
         ═══════════════════════════════════════════════════ */}
-        <div
+        <div 
           ref={showcaseRef as React.RefObject<HTMLDivElement>}
-          className="results-showcase"
-          style={{
-            opacity: showcaseVisible ? 1 : 0,
-            transform: showcaseVisible ? "translateY(0)" : "translateY(32px)",
-            transition:
-              "opacity 1s cubic-bezier(0.25, 0, 0.05, 1) 0.15s, transform 1s cubic-bezier(0.25, 0, 0.05, 1) 0.15s",
-          }}
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          {/* Before Column */}
-          <div className="results-showcase-col results-showcase-col--before">
-            <div className="results-image-wrapper results-image--before">
-              <Image
-                src="/results-before-v1.png"
-                alt="Before treatment — natural skin with visible texture"
-                fill
-                sizes="(max-width: 768px) 86vw, 42vw"
-                className="results-image"
-              />
-              {/* CSS filter overlay applied via class */}
-              <div className="results-image-overlay results-image-overlay--before" aria-hidden="true" />
-            </div>
-            <span className="results-image-label">Before</span>
-          </div>
-
-          {/* After Column */}
-          <div className="results-showcase-col results-showcase-col--after">
-            <div className="results-image-wrapper results-image--after">
-              <Image
-                src="/results-after-v1.png"
-                alt="After treatment — visibly radiant, luminous skin"
-                fill
-                sizes="(max-width: 768px) 86vw, 42vw"
-                className="results-image"
-              />
-              <div className="results-image-overlay results-image-overlay--after" aria-hidden="true" />
-            </div>
-            <span className="results-image-label">After</span>
-          </div>
-
-          {/* Floating Treatment Badge */}
-          <div className="results-treatment-badge" role="img" aria-label="Facial Rejuvenation treatment — 6 sessions">
-            <span className="results-badge-title">Facial Rejuvenation</span>
-            <span className="results-badge-detail">6 Sessions · 12 Weeks</span>
-          </div>
+          <BeforeAfterSlider isVisible={showcaseVisible} />
         </div>
 
         {/* ═══════════════════════════════════════════════════
-            TESTIMONIAL — Minimal Editorial Quote
-        ═══════════════════════════════════════════════════ */}
-        <div
-          ref={testimonialsRef as React.RefObject<HTMLDivElement>}
-          className="results-testimonial"
-          style={{
-            opacity: testimonialsVisible ? 1 : 0,
-            transform: testimonialsVisible ? "translateY(0)" : "translateY(20px)",
-            transition:
-              "opacity 0.9s cubic-bezier(0.25, 0, 0.05, 1) 0.1s, transform 0.9s cubic-bezier(0.25, 0, 0.05, 1) 0.1s",
-          }}
-        >
-          {/* Decorative open quote */}
-          <span className="results-quote-mark" aria-hidden="true">&ldquo;</span>
-
-          <blockquote className="results-quote">
-            My skin has never felt this alive. After just a few sessions,
-            I noticed a clarity and luminosity I hadn&apos;t seen in years.
-            It&apos;s not just treatment — it&apos;s transformation.
-          </blockquote>
-
-          <cite className="results-cite">
-            <span className="results-cite-name">Minji K.</span>
-            <span className="results-cite-detail">Facial Rejuvenation Client</span>
-          </cite>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════
-            TREATMENT OUTCOMES — Subtle Metrics
+            TREATMENT OUTCOMES — Integrated Metrics
         ═══════════════════════════════════════════════════ */}
         <div
           ref={metricsRef as React.RefObject<HTMLDivElement>}
