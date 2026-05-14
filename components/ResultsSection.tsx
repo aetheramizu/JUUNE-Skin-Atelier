@@ -339,8 +339,8 @@ export default function ResultsSection(): React.ReactElement {
               "opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) 0.4s, transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) 0.4s",
           }}
         >
-          <a href="#booking" className="btn-accent" id="results-cta-booking">
-            Begin Your Transformation
+          <a href="#booking" className="btn-accent text-center" id="results-cta-booking">
+            <span className="text-center w-full block">Begin Your Transformation</span>
           </a>
           <a href="#treatments" className="results-cta-secondary" id="results-cta-treatments">
             Explore Treatments

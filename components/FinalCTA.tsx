@@ -106,7 +106,7 @@ export default function FinalCTA(): React.ReactElement {
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
+            fontSize: "clamp(1.9rem, 4.5vw, 3.8rem)",
             fontWeight: 300,
             lineHeight: 1.08,
             letterSpacing: "-0.01em",

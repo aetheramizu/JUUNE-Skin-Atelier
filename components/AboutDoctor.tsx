@@ -103,9 +103,9 @@ export default function AboutDoctor(): React.ReactElement {
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
+              fontSize: "clamp(2.5rem, 5vw, 3.8rem)",
               fontWeight: 300,
-              lineHeight: 1.08,
+              lineHeight: 1.05,
               letterSpacing: "-0.01em",
               color: "var(--color-text-heading)",
               marginBottom: "var(--space-6)",
@@ -194,7 +194,7 @@ export default function AboutDoctor(): React.ReactElement {
               <p
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-body-lg)",
+                  fontSize: "var(--text-sm)",
                   lineHeight: "var(--leading-relaxed)",
                   color: "var(--color-text-body)",
                   marginBottom: "var(--space-8)",
@@ -268,7 +268,7 @@ export default function AboutDoctor(): React.ReactElement {
                     <span
                       style={{
                         fontFamily: "var(--font-display)",
-                        fontSize: "clamp(1.8rem, 3vw, 2.4rem)",
+                        fontSize: "clamp(1.4rem, 3vw, 2.4rem)",
                         fontWeight: 400,
                         color: "var(--color-accent-dark)",
                         letterSpacing: "0.02em",
@@ -281,7 +281,7 @@ export default function AboutDoctor(): React.ReactElement {
                     <span
                       style={{
                         fontFamily: "var(--font-body)",
-                        fontSize: "0.8rem",
+                        fontSize: "0.7rem",
                         fontWeight: 500,
                         color: "var(--color-text-muted)",
                         letterSpacing: "0.08em",
@@ -323,7 +323,7 @@ export default function AboutDoctor(): React.ReactElement {
               <span
                 style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "var(--text-xs)",
+                  fontSize: "0.7rem",
                   fontWeight: 500,
                   letterSpacing: "var(--tracking-wide)",
                   color: "var(--color-accent-dark)",

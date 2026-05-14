@@ -109,13 +109,13 @@ function FeaturedCard({
       aria-label={`Testimonial from ${testimonial.name}`}
     >
       {/* Opening quote */}
-      <QuoteMark size={52} opacity={0.08} />
+      <QuoteMark size={42} opacity={0.08} />
 
       {/* Quote body */}
       <blockquote
         style={{
           fontFamily: "var(--font-display)",
-          fontSize: "clamp(1.25rem, 2.2vw, 1.65rem)",
+          fontSize: "clamp(1rem, 2.2vw, 1.65rem)",
           fontWeight: 300,
           fontStyle: "italic",
           lineHeight: 1.65,
@@ -140,12 +140,11 @@ function FeaturedCard({
         aria-hidden="true"
       />
 
-      {/* Attribution */}
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
         <span
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: "var(--text-sm)",
+            fontSize: "0.7rem",
             fontWeight: 500,
             letterSpacing: "var(--tracking-wide)",
             color: "var(--color-text-heading)",
@@ -157,7 +156,7 @@ function FeaturedCard({
         <span
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: "var(--text-xs)",
+            fontSize: "0.68rem",
             color: "var(--color-text-muted)",
             letterSpacing: "0.08em",
             whiteSpace: "nowrap" as const,
@@ -293,7 +292,7 @@ export default function Testimonials(): React.ReactElement {
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
+              fontSize: "clamp(1.9rem, 4.5vw, 3.8rem)",
               fontWeight: 300,
               lineHeight: 1.08,
               letterSpacing: "-0.01em",

@@ -113,7 +113,7 @@ function TreatmentItem({
         }}
       >
         {/* ── Image ─────────────────────────────────────────── */}
-        <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-bg-soft)]">
+        <div className="relative aspect-square md:aspect-[3/4] w-full overflow-hidden bg-[var(--color-bg-soft)]">
           <Image
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
@@ -287,12 +287,13 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Heading */}
           <h2
-            className="font-serif text-[2.5rem] sm:text-[3.25rem] lg:text-[4rem] font-light text-center"
+            className="font-serif text-[2.1rem] sm:text-[3.25rem] lg:text-[4rem] font-light text-center"
             style={{
-              lineHeight: 1.02,
+              lineHeight: 1.1,
               letterSpacing: "0",
               color: "var(--color-text-heading)",
-              marginBottom: "1.75rem",
+              marginBottom: "1.25rem",
+              paddingInline: "1rem",
             }}
           >
             Tailored Care for{" "}
@@ -306,7 +307,7 @@ export default function FeaturedTreatments(): React.ReactElement {
 
           {/* Description */}
           <p
-            className="text-[1rem] sm:text-[1.05rem] leading-[1.9] text-center max-w-xl mx-auto"
+            className="text-[0.95rem] sm:text-[1.05rem] leading-[1.8] text-center max-w-[18rem] sm:max-w-xl mx-auto"
             style={{ color: "color-mix(in srgb, var(--color-text-body) 78%, var(--color-text-muted) 22%)" }}
           >
             Discover our curated collection of premium treatments —
@@ -315,8 +316,8 @@ export default function FeaturedTreatments(): React.ReactElement {
           </p>
         </div>
 
-        {/* ── Treatment Grid (4-col desktop, 2-col mobile) ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 w-full mx-auto">
+        {/* ── Treatment Grid (4-col desktop, 2-col tablet, 1-col mobile) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-5 lg:gap-6 w-full mx-auto max-w-[20rem] md:max-w-none">
           {TREATMENTS.map((treatment, index) => (
             <TreatmentItem
               key={treatment.title}
