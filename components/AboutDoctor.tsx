@@ -268,10 +268,12 @@ export default function AboutDoctor(): React.ReactElement {
                     <span
                       style={{
                         fontFamily: "var(--font-display)",
-                        fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
+                        fontSize: "clamp(1.8rem, 3vw, 2.4rem)",
                         fontWeight: 400,
                         color: "var(--color-accent-dark)",
                         letterSpacing: "0.02em",
+                        lineHeight: 1,
+                        marginBottom: "4px",
                       }}
                     >
                       {cred.value}
@@ -279,10 +281,10 @@ export default function AboutDoctor(): React.ReactElement {
                     <span
                       style={{
                         fontFamily: "var(--font-body)",
-                        fontSize: "0.65rem",
-                        fontWeight: 400,
+                        fontSize: "0.8rem",
+                        fontWeight: 500,
                         color: "var(--color-text-muted)",
-                        letterSpacing: "0.06em",
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase" as const,
                         textAlign: "center" as const,
                         whiteSpace: "nowrap" as const,
