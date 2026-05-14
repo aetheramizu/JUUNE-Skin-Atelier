@@ -5,9 +5,10 @@ import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────
    JUUNÉ Skin Atelier — Featured Treatments Section
-   • Editorial layout without cards
-   • Clean text-left hierarchy
-   • Responsive 2x2 grid for perfect balance
+   • Compact 4-column overlay cards
+   • Text overlaid on image with gradient
+   • Hover reveals description + CTA
+   • Responsive: 2-col mobile / 4-col desktop
 ───────────────────────────────────────────────────────────── */
 
 /* ── Treatment Data ──────────────────────────────────────── */
@@ -78,7 +79,7 @@ function useScrollReveal(threshold: number = 0.12): {
   return { ref, isVisible };
 }
 
-/* ── Treatment Item ──────────────────────────────────────── */
+/* ── Treatment Card (Overlay Style) ──────────────────────── */
 function TreatmentItem({
   treatment,
   index,
@@ -88,68 +89,102 @@ function TreatmentItem({
   index: number;
   isVisible: boolean;
 }): React.ReactElement {
-  // Add a subtle vertical offset to the second column for an editorial stagger.
-  const offsetClass = index % 2 !== 0 ? "md:mt-10 lg:mt-14" : "";
-
   return (
     <div
-      className={offsetClass}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 100}ms, transform 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 100}ms`,
+        transition: `opacity 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 120}ms, transform 800ms cubic-bezier(0.25, 0, 0.05, 1) ${150 + index * 120}ms`,
       }}
     >
       <a
         href={treatment.href}
         id={`treatment-item-${index}`}
-        className="group block w-full cursor-pointer"
+        className="treatment-card group relative block w-full cursor-pointer overflow-hidden rounded-[12px]"
       >
         {/* ── Image ─────────────────────────────────────────── */}
-        <div className="relative aspect-[6/7] w-full overflow-hidden rounded-[14px] bg-[var(--color-bg-soft)] shadow-[0_20px_60px_rgba(44,26,14,0.06)] transition-shadow duration-700 group-hover:shadow-[0_26px_80px_rgba(44,26,14,0.1)]">
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-bg-soft)]">
           <Image
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 46vw, 540px"
-            className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.035]"
+            sizes="(max-width: 768px) 48vw, (max-width: 1024px) 46vw, 260px"
+            className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
           />
-          {/* Subtle white overlay gradient for depth */}
+
+          {/* ── Default gradient overlay (bottom) ─────────── */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-70 transition-opacity duration-700 group-hover:opacity-85"
+            className="absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
             aria-hidden="true"
             style={{
-              background: "linear-gradient(180deg, rgba(250, 248, 245, 0.1) 0%, transparent 40%, rgba(44, 26, 14, 0.08) 100%)",
+              background: "linear-gradient(to top, rgba(28, 18, 8, 0.65) 0%, rgba(28, 18, 8, 0.25) 35%, transparent 60%)",
             }}
           />
+
+          {/* ── Hover gradient overlay (extends higher) ───── */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            aria-hidden="true"
+            style={{
+              background: "linear-gradient(to top, rgba(28, 18, 8, 0.78) 0%, rgba(28, 18, 8, 0.45) 45%, rgba(28, 18, 8, 0.1) 75%, transparent 100%)",
+            }}
+          />
+
+          {/* ── Text Content (overlaid) ───────────────────── */}
+          <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 sm:p-5 lg:p-5">
+            {/* Title — always visible */}
+            <h3
+              className="font-serif text-[1.15rem] sm:text-[1.3rem] lg:text-[1.35rem] font-normal leading-[1.15] tracking-[0.01em]"
+              style={{ color: "rgba(250, 248, 245, 0.95)" }}
+            >
+              {treatment.title}
+            </h3>
+
+            {/* Description — revealed on hover */}
+            <div className="treatment-card-desc">
+              <p
+                className="mt-2.5 text-[0.78rem] sm:text-[0.82rem] leading-[1.6] line-clamp-3"
+                style={{ color: "rgba(250, 248, 245, 0.72)" }}
+              >
+                {treatment.description}
+              </p>
+
+              {/* CTA */}
+              <span
+                className="treatment-card-cta mt-3 inline-flex items-center gap-2.5 text-[0.65rem] font-medium uppercase tracking-[0.16em]"
+                style={{ color: "rgba(250, 248, 245, 0.6)" }}
+              >
+                Learn More
+                <span
+                  className="treatment-card-line h-px w-7 transition-all duration-500"
+                  style={{ backgroundColor: "rgba(250, 248, 245, 0.35)" }}
+                  aria-hidden="true"
+                />
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* ── Text Content ──────────────────────────────────── */}
-        <div className="flex w-full flex-col items-start border-t border-[rgba(44,26,14,0.07)] pt-5 mt-6">
-          <h3
-            className="font-serif text-[1.6rem] sm:text-[1.8rem] font-normal leading-[1.05] tracking-normal text-[var(--color-text-heading)] transition-colors duration-300 group-hover:text-[var(--color-accent-dark)]"
-          >
-            {treatment.title}
-          </h3>
-
-          <p
-            className="mt-3.5 max-w-[30rem] text-[0.92rem] leading-[1.8] line-clamp-3"
-            style={{ color: "color-mix(in srgb, var(--color-text-body) 82%, var(--color-text-muted) 18%)" }}
-          >
-            {treatment.description}
-          </p>
-
-          {/* ── CTA ─────────────────────────────────────────── */}
-          <span
-            className="mt-5 inline-flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-[var(--color-text-muted)] transition-colors duration-500 ease-out group-hover:text-[var(--color-text-heading)]"
-          >
-            Learn More
-            <span
-              className="h-px w-10 bg-[rgba(44,26,14,0.2)] transition-all duration-500 group-hover:w-14 group-hover:bg-[var(--color-accent-dark)]"
-              aria-hidden="true"
-            />
-          </span>
-        </div>
+        {/* ── Hover styles (scoped via styled-jsx) ────────── */}
+        <style jsx>{`
+          .treatment-card-desc {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 500ms ease-out, opacity 500ms ease-out;
+          }
+          .treatment-card:hover .treatment-card-desc {
+            max-height: 140px;
+            opacity: 1;
+          }
+          .treatment-card:hover .treatment-card-cta {
+            color: rgba(250, 248, 245, 0.85);
+          }
+          .treatment-card:hover .treatment-card-line {
+            width: 2.5rem;
+            background-color: rgba(201, 169, 110, 0.7);
+          }
+        `}</style>
       </a>
     </div>
   );
@@ -165,7 +200,7 @@ export default function FeaturedTreatments(): React.ReactElement {
       ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative overflow-hidden flex flex-col items-center"
       aria-label="Featured Treatments"
-      style={{ backgroundColor: "var(--color-bg-soft)", borderTop: "1px solid var(--color-border-light)", paddingTop: "clamp(5rem, 8vw, 8rem)", paddingBottom: "clamp(5rem, 7vw, 7rem)" }}
+      style={{ backgroundColor: "var(--color-bg-soft)", borderTop: "1px solid var(--color-border-light)", paddingTop: "clamp(4rem, 6vw, 6rem)", paddingBottom: "clamp(4rem, 6vw, 5.5rem)" }}
     >
       {/* ── Ambient background — warm radials for glass depth ── */}
       <div
@@ -180,12 +215,12 @@ export default function FeaturedTreatments(): React.ReactElement {
         }}
       />
 
-      <div className="relative w-full max-w-[1080px] mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
+      <div className="relative w-full max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-10 flex flex-col items-center">
         {/* ── Section Header ──────────────────────────────── */}
         <div
           className="flex flex-col items-center text-center w-full max-w-3xl mx-auto"
           style={{
-            marginBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+            marginBottom: "clamp(2rem, 3.5vw, 3rem)",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.8s cubic-bezier(0.25, 0, 0.05, 1), transform 0.8s cubic-bezier(0.25, 0, 0.05, 1)",
@@ -209,7 +244,7 @@ export default function FeaturedTreatments(): React.ReactElement {
               lineHeight: 1.02,
               letterSpacing: "0",
               color: "var(--color-text-heading)",
-              marginBottom: "2rem",
+              marginBottom: "1.75rem",
             }}
           >
             Tailored Care for{" "}
@@ -232,8 +267,8 @@ export default function FeaturedTreatments(): React.ReactElement {
           </p>
         </div>
 
-        {/* ── Treatment Grid ────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14 lg:gap-x-24 gap-y-16 sm:gap-y-20 lg:gap-y-28 w-full mx-auto">
+        {/* ── Treatment Grid (4-col desktop, 2-col mobile) ── */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 w-full mx-auto">
           {TREATMENTS.map((treatment, index) => (
             <TreatmentItem
               key={treatment.title}
@@ -248,7 +283,7 @@ export default function FeaturedTreatments(): React.ReactElement {
         <div
           className="flex justify-center w-full"
           style={{
-            marginTop: "clamp(5rem, 7vw, 6.5rem)",
+            marginTop: "clamp(3rem, 5vw, 4.5rem)",
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms, transform 0.7s cubic-bezier(0.25, 0, 0.05, 1) 600ms",
