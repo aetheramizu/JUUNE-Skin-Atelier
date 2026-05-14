@@ -195,9 +195,9 @@ function BeforeAfterSlider({
         />
       </div>
 
-      {/* Labels */}
-      <span className="results-slider-label results-slider-label--before">Before</span>
-      <span className="results-slider-label results-slider-label--after">After</span>
+      {/* Labels   */}
+      <span className="results-slider-text results-slider-text--before">Before</span>
+      <span className="results-slider-text results-slider-text--after">After</span>
 
       {/* Slider handle */}
       <div
