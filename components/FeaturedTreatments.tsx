@@ -170,56 +170,66 @@ function TreatmentItem({
               }}
             />
 
-            {/* Description — revealed on hover (GPU-accelerated) */}
+            {/* Description & CTA — revealed on hover */}
             <div
               style={{
-                opacity: hovered ? 1 : 0,
-                transform: hovered ? "translateY(0)" : "translateY(8px)",
-                transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1)",
-                pointerEvents: hovered ? "auto" : "none",
+                display: "grid",
+                gridTemplateRows: hovered ? "1fr" : "0fr",
+                transition: "grid-template-rows 450ms cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
-              <p
-                className="line-clamp-3"
-                style={{
-                  marginTop: "0.65rem",
-                  fontSize: "0.8rem",
-                  lineHeight: 1.65,
-                  color: "rgba(250, 248, 245, 0.72)",
-                }}
-              >
-                {treatment.description}
-              </p>
-
-              {/* CTA */}
-              <span
-                className="inline-flex items-center gap-2"
-                style={{
-                  marginTop: "0.75rem",
-                  fontSize: "0.65rem",
-                  fontWeight: 500,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.16em",
-                  color: "rgba(250, 248, 245, 0.75)",
-                }}
-              >
-                Learn More
-                {/* Small arrow for affordance */}
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ opacity: 0.7 }}
-                  aria-hidden="true"
+              <div style={{ overflow: "hidden" }}>
+                <div
+                  style={{
+                    opacity: hovered ? 1 : 0,
+                    transform: hovered ? "translateY(0)" : "translateY(12px)",
+                    transition: "opacity 400ms ease 100ms, transform 400ms ease 100ms",
+                    pointerEvents: hovered ? "auto" : "none",
+                  }}
                 >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
+                  <p
+                    className="line-clamp-3"
+                    style={{
+                      marginTop: "0.65rem",
+                      fontSize: "0.8rem",
+                      lineHeight: 1.65,
+                      color: "rgba(250, 248, 245, 0.72)",
+                    }}
+                  >
+                    {treatment.description}
+                  </p>
+
+                  {/* CTA */}
+                  <span
+                    className="inline-flex items-center gap-2"
+                    style={{
+                      marginTop: "0.75rem",
+                      fontSize: "0.65rem",
+                      fontWeight: 500,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.16em",
+                      color: "rgba(250, 248, 245, 0.75)",
+                    }}
+                  >
+                    Learn More
+                    {/* Small arrow for affordance */}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ opacity: 0.7 }}
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
