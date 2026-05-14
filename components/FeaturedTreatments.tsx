@@ -79,7 +79,7 @@ function useScrollReveal(threshold: number = 0.12): {
   return { ref, isVisible };
 }
 
-/* ── Treatment Card (Overlay Style) ──────────────────────── */
+/* ── Treatment Card (Overlay Style — Refined) ───────────── */
 function TreatmentItem({
   treatment,
   index,
@@ -89,6 +89,8 @@ function TreatmentItem({
   index: number;
   isVisible: boolean;
 }): React.ReactElement {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div
       style={{
@@ -100,7 +102,15 @@ function TreatmentItem({
       <a
         href={treatment.href}
         id={`treatment-item-${index}`}
-        className="treatment-card group relative block w-full cursor-pointer overflow-hidden rounded-[12px]"
+        className="group relative block w-full cursor-pointer overflow-hidden rounded-[14px]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          boxShadow: hovered
+            ? "0 14px 44px rgba(44, 26, 14, 0.15)"
+            : "0 8px 32px rgba(44, 26, 14, 0.08)",
+          transition: "box-shadow 500ms cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
       >
         {/* ── Image ─────────────────────────────────────────── */}
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--color-bg-soft)]">
@@ -108,83 +118,111 @@ function TreatmentItem({
             src={treatment.image}
             alt={`${treatment.title} — JUUNÉ Skin Atelier`}
             fill
-            sizes="(max-width: 768px) 48vw, (max-width: 1024px) 46vw, 260px"
-            className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-          />
-
-          {/* ── Default gradient overlay (bottom) ─────────── */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
-            aria-hidden="true"
+            sizes="(max-width: 768px) 48vw, (max-width: 1024px) 46vw, 280px"
+            className="object-cover object-center"
             style={{
-              background: "linear-gradient(to top, rgba(28, 18, 8, 0.65) 0%, rgba(28, 18, 8, 0.25) 35%, transparent 60%)",
+              transform: hovered ? "scale(1.045)" : "scale(1)",
+              transition: "transform 1200ms ease-out",
             }}
           />
 
-          {/* ── Hover gradient overlay (extends higher) ───── */}
+          {/* ── Cinematic gradient overlay ───────────────────── */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            className="absolute inset-0 pointer-events-none"
             aria-hidden="true"
             style={{
-              background: "linear-gradient(to top, rgba(28, 18, 8, 0.78) 0%, rgba(28, 18, 8, 0.45) 45%, rgba(28, 18, 8, 0.1) 75%, transparent 100%)",
+              background: hovered
+                ? "linear-gradient(to top, rgba(18, 10, 4, 0.85) 0%, rgba(24, 14, 6, 0.55) 40%, rgba(28, 18, 8, 0.15) 70%, transparent 100%)"
+                : "linear-gradient(to top, rgba(22, 14, 6, 0.82) 0%, rgba(28, 18, 8, 0.38) 35%, rgba(28, 18, 8, 0.05) 55%, transparent 70%)",
+              transition: "background 600ms cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           />
 
           {/* ── Text Content (overlaid) ───────────────────── */}
-          <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-4 sm:p-5 lg:p-5">
+          <div
+            className="absolute inset-x-0 bottom-0 flex flex-col justify-end"
+            style={{ padding: "1.25rem 1.15rem" }}
+          >
             {/* Title — always visible */}
             <h3
-              className="font-serif text-[1.15rem] sm:text-[1.3rem] lg:text-[1.35rem] font-normal leading-[1.15] tracking-[0.01em]"
-              style={{ color: "rgba(250, 248, 245, 0.95)" }}
+              className="font-serif font-normal leading-[1.15]"
+              style={{
+                fontSize: "clamp(1.1rem, 1.6vw, 1.5rem)",
+                letterSpacing: "0.01em",
+                color: "rgba(250, 248, 245, 0.97)",
+                textShadow: "0 1px 10px rgba(0, 0, 0, 0.35), 0 0 30px rgba(0, 0, 0, 0.15)",
+              }}
             >
               {treatment.title}
             </h3>
 
-            {/* Description — revealed on hover */}
-            <div className="treatment-card-desc">
+            {/* Gold accent line — always visible */}
+            <div
+              aria-hidden="true"
+              style={{
+                width: hovered ? "2.5rem" : "1.5rem",
+                height: "1.5px",
+                backgroundColor: "rgba(201, 169, 110, 0.6)",
+                marginTop: "0.6rem",
+                borderRadius: "1px",
+                transition: "width 500ms cubic-bezier(0.4, 0, 0.2, 1), background-color 500ms ease",
+                ...(hovered ? { backgroundColor: "rgba(201, 169, 110, 0.85)" } : {}),
+              }}
+            />
+
+            {/* Description — revealed on hover (GPU-accelerated) */}
+            <div
+              style={{
+                opacity: hovered ? 1 : 0,
+                transform: hovered ? "translateY(0)" : "translateY(8px)",
+                transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1)",
+                pointerEvents: hovered ? "auto" : "none",
+              }}
+            >
               <p
-                className="mt-2.5 text-[0.78rem] sm:text-[0.82rem] leading-[1.6] line-clamp-3"
-                style={{ color: "rgba(250, 248, 245, 0.72)" }}
+                className="line-clamp-3"
+                style={{
+                  marginTop: "0.65rem",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "rgba(250, 248, 245, 0.72)",
+                }}
               >
                 {treatment.description}
               </p>
 
               {/* CTA */}
               <span
-                className="treatment-card-cta mt-3 inline-flex items-center gap-2.5 text-[0.65rem] font-medium uppercase tracking-[0.16em]"
-                style={{ color: "rgba(250, 248, 245, 0.6)" }}
+                className="inline-flex items-center gap-2"
+                style={{
+                  marginTop: "0.75rem",
+                  fontSize: "0.65rem",
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.16em",
+                  color: "rgba(250, 248, 245, 0.75)",
+                }}
               >
                 Learn More
-                <span
-                  className="treatment-card-line h-px w-7 transition-all duration-500"
-                  style={{ backgroundColor: "rgba(250, 248, 245, 0.35)" }}
+                {/* Small arrow for affordance */}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ opacity: 0.7 }}
                   aria-hidden="true"
-                />
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </span>
             </div>
           </div>
         </div>
-
-        {/* ── Hover styles (scoped via styled-jsx) ────────── */}
-        <style jsx>{`
-          .treatment-card-desc {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 500ms ease-out, opacity 500ms ease-out;
-          }
-          .treatment-card:hover .treatment-card-desc {
-            max-height: 140px;
-            opacity: 1;
-          }
-          .treatment-card:hover .treatment-card-cta {
-            color: rgba(250, 248, 245, 0.85);
-          }
-          .treatment-card:hover .treatment-card-line {
-            width: 2.5rem;
-            background-color: rgba(201, 169, 110, 0.7);
-          }
-        `}</style>
       </a>
     </div>
   );
@@ -268,7 +306,7 @@ export default function FeaturedTreatments(): React.ReactElement {
         </div>
 
         {/* ── Treatment Grid (4-col desktop, 2-col mobile) ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 w-full mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 w-full mx-auto">
           {TREATMENTS.map((treatment, index) => (
             <TreatmentItem
               key={treatment.title}
