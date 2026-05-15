@@ -245,6 +245,7 @@ export default function FeaturedTreatments(): React.ReactElement {
 
   return (
     <section
+      id="treatments"
       ref={sectionRef as React.RefObject<HTMLElement>}
       className="relative overflow-hidden flex flex-col items-center"
       aria-label="Featured Treatments"

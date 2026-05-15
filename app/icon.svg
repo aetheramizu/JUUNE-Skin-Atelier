@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Deep luxury brown background -->
+  <rect width="512" height="512" rx="128" fill="#2C1A0E" />
+  
+  <!-- Elegant gold four-pointed glow/sparkle -->
+  <path d="M256 120 Q256 256 120 256 Q256 256 256 392 Q256 256 392 256 Q256 256 256 120 Z" fill="#C9A96E" />
+</svg>
